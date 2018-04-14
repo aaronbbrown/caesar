@@ -3,7 +3,7 @@ FILES=`go list ./.../`
 
 .PHONY: all vet test build clean coverage
 
-all: vet test build
+all: vet test build bench
 
 vet:
 	$(GO) vet $(FILES)
@@ -17,6 +17,9 @@ test: vet
 clean:
 	rm -vrf bin
 	rm coverage.out
+
+bench:
+	$(GO) test -v -bench=. -benchtime=5s
 
 coverage:
 	go tool cover -html=coverage.out
