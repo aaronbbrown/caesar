@@ -17,12 +17,10 @@ type Caesar struct {
 }
 
 func NewCaesar(msg string, key CaesarKey) *Caesar {
-	caesar := Caesar{
+	return &Caesar{
 		Msg: msg,
 		Key: key,
 	}
-
-	return &caesar
 }
 
 func (c *Caesar) Encrypt() string {
