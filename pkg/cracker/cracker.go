@@ -31,7 +31,7 @@ func (c *Cracker) Crack(minKey, maxKey, percentWords, parallelism int) (*cipher.
 			wg.Add(1)
 			defer wg.Done()
 			for key := range keyC {
-				caesar := cipher.NewCaesar(c.msg, key)
+				caesar := cipher.NewCaesar(c.msg, cipher.NewCaesarKey(key))
 				decrypted := caesar.Decrypt()
 				percent := c.dictionary.PercentMatches(decrypted)
 				if percent >= percentWords {
@@ -40,7 +40,7 @@ func (c *Cracker) Crack(minKey, maxKey, percentWords, parallelism int) (*cipher.
 					// will exit before the value has been read, allowing us
 					// to signal that an answer was found and wait for all the
 					// go routines to exit before checking the actual value.
-					decryptedC <- cipher.NewCaesar(decrypted, key)
+					decryptedC <- cipher.NewCaesar(decrypted, cipher.NewCaesarKey(key))
 					return
 				}
 			}

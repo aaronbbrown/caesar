@@ -19,7 +19,7 @@ func TestCrack(t *testing.T) {
 		t.Fatal("Could not load text.txt")
 	}
 
-	caesar := cipher.NewCaesar(string(data), 3)
+	caesar := cipher.NewCaesar(string(data), cipher.NewCaesarKey(3))
 	encrypted := caesar.Encrypt()
 	caesar.Msg = encrypted
 	cracker := NewCracker(encrypted, dictionary)

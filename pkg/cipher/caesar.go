@@ -2,49 +2,20 @@ package cipher
 
 import (
 	"bytes"
-	"strconv"
-	"unicode"
 )
-
-const (
-	base = 25
-
-	dirLeft direction = iota
-	dirRight
-)
-
-type direction int
 
 type Caesar struct {
-	Key     int
-	Offsets []int
-	Msg     string
-	letters []rune
+	Key CaesarKey
+	Msg string
 }
 
-func NewCaesar(msg string, key int) *Caesar {
+func NewCaesar(msg string, key CaesarKey) *Caesar {
 	caesar := Caesar{
-		Msg:     msg,
-		Key:     key,
-		letters: letters(),
+		Msg: msg,
+		Key: key,
 	}
-
-	caesar.SetKey(key)
 
 	return &caesar
-}
-
-func (c *Caesar) SetKey(key int) {
-	offsets := []int{}
-
-	str := strconv.FormatInt(int64(key), base)
-	for _, r := range str {
-		val, _ := strconv.ParseInt(string(r), base, 64)
-		offsets = append(offsets, int(val))
-	}
-
-	c.Offsets = offsets
-	c.Key = key
 }
 
 func (c *Caesar) Encrypt() string {
@@ -53,26 +24,6 @@ func (c *Caesar) Encrypt() string {
 
 func (c *Caesar) Decrypt() string {
 	return c.crypt(false)
-}
-
-// shift the rune in the specified direction using the offset into the offsets
-// slice as specified. Offset will be incremented if the key is in the letters
-// slice.
-func (c *Caesar) shift(r rune, dir direction, idx *int) rune {
-	lower := unicode.ToLower(r)
-	if lower >= c.letters[0] && lower <= c.letters[len(c.letters)-1] {
-		offset := int(lower) - int(c.letters[0])
-		if dir == dirRight {
-			offset += c.Offsets[saneModInt(*idx, len(c.Offsets))]
-		} else {
-			offset -= c.Offsets[saneModInt(*idx, len(c.Offsets))]
-		}
-		shifted := rune(c.letters[saneModInt(offset, len(c.letters))])
-		*idx++
-		return shifted
-	}
-	return r
-
 }
 
 func (c *Caesar) crypt(encrypt bool) string {
@@ -86,7 +37,7 @@ func (c *Caesar) crypt(encrypt bool) string {
 			dir = dirLeft
 		}
 
-		r := c.shift(r, dir, &idx)
+		r := c.Key.ShiftRune(r, dir, &idx)
 		buffer.WriteRune(r)
 	}
 
