@@ -8,14 +8,14 @@ import (
 	"github.com/aaronbbrown/caesar/pkg/cracker"
 )
 
-func BenchmarkCrack1SM(b *testing.B)   { benchmarkCrack(1, 1, b) }
-func BenchmarkCrack10SM(b *testing.B)  { benchmarkCrack(10, 1, b) }
-func BenchmarkCrack100SM(b *testing.B) { benchmarkCrack(100, 1, b) }
+func BenchmarkCrack1SMP1(b *testing.B)   { benchmarkCrack(1, 1, b) }
+func BenchmarkCrack10SMP1(b *testing.B)  { benchmarkCrack(10, 1, b) }
+func BenchmarkCrack100SMP1(b *testing.B) { benchmarkCrack(100, 1, b) }
 
-func BenchmarkCrack1KP1(b *testing.B)   { benchmarkCrack(1000, 1, b) }
-func BenchmarkCrack10KP1(b *testing.B)  { benchmarkCrack(10000, 1, b) }
-func BenchmarkCrack100KP1(b *testing.B) { benchmarkCrack(100000, 1, b) }
-func BenchmarkCrack1MP1(b *testing.B)   { benchmarkCrack(1000000, 1, b) }
+func BenchmarkCrack1KLGP1(b *testing.B)   { benchmarkCrack(1000, 1, b) }
+func BenchmarkCrack10LGKP1(b *testing.B)  { benchmarkCrack(10000, 1, b) }
+func BenchmarkCrack100KLGP1(b *testing.B) { benchmarkCrack(100000, 1, b) }
+func BenchmarkCrack1MLGP1(b *testing.B)   { benchmarkCrack(1000000, 1, b) }
 
 func BenchmarkCrack1KP2(b *testing.B)   { benchmarkCrack(1000, 2, b) }
 func BenchmarkCrack10KP2(b *testing.B)  { benchmarkCrack(10000, 2, b) }
