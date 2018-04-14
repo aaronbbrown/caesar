@@ -41,5 +41,4 @@ func TestCrack(t *testing.T) {
 			t.Fatal("Crack succeeded when it should have failed")
 		}
 	})
-
 }
