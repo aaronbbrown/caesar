@@ -24,6 +24,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
+var decryptKey *int
+
 // decryptCmd represents the decrypt command
 var decryptCmd = &cobra.Command{
 	Use:   "decrypt",
@@ -35,7 +37,7 @@ var decryptCmd = &cobra.Command{
 			log.Fatal(err)
 		}
 
-		caesar := cipher.NewCaesar(string(data), *key)
+		caesar := cipher.NewCaesar(string(data), *decryptKey)
 		decrypted := caesar.Decrypt()
 		fmt.Println(decrypted)
 	},
@@ -43,4 +45,6 @@ var decryptCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(decryptCmd)
+	decryptKey = decryptCmd.Flags().Int("key", 0, "The encryption key (ignored in crack mode)")
+	decryptCmd.MarkFlagRequired("key")
 }
