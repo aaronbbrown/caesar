@@ -42,8 +42,8 @@ func (c *Caesar) crypt(mode encryptMode) string {
 			dir = dirLeft
 		}
 
-		r := c.Key.ShiftRune(r, dir, &idx)
-		buffer.WriteRune(r)
+		shifted := c.Key.ShiftRune(r, dir, &idx)
+		buffer.WriteRune(shifted)
 	}
 
 	return buffer.String()
